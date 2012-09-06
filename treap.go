@@ -1,8 +1,8 @@
 // Package treap implements a persistent (immutable) treap structure
 // for associating integer keys with arbitrary values.
 //
-// The implementation is based on (Treaps: The Magical Awesome
-// BBT)[http://pavpanchekha.com/blog/treap.html]
+// The implementation is based on [Treaps: The Magical Awesome
+// BBT](http://pavpanchekha.com/blog/treap.html).
 package treap
 
 import "math/rand"
