@@ -30,6 +30,35 @@ func Test_Sanity(t *testing.T) {
 	}
 }
 
+func Test_TreapWalkKeys(t *testing.T) {
+	treap := New()
+	for i := 0; i < 100; i++ {
+		treap = treap.Set(i, i)
+	}
+
+	keys := treap.WalkKeys()
+	for i := 0; i < 100; i++ {
+		key := <-keys
+		if key != i {
+			t.Error("keys out of order")
+		}
+	}
+}
+
+func Test_TreapWalk(t *testing.T) {
+	treap := New()
+	for i := 0; i < 100; i++ {
+		treap = treap.Set(i, i)
+	}
+
+	nodes := treap.Walk()
+	for i := 0; i < 100; i++ {
+		node := <-nodes
+		if node.Value != i {
+			t.Error("keys out of order")
+		}
+	}
+}
 func Benchmark_PersistentTreapSet(b *testing.B) {
 	treap := New()
 	for i := 0; i < b.N; i++ {

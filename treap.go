@@ -160,14 +160,47 @@ func (root *Node) Delete(key int) (node *Node) {
 	return
 }
 
-func (root *Node) Keys(ch chan int) {
-	if root == nil {
+// Traverses the treap in order from a new goroutine, returning
+// a read-only channel of nodes.
+func (node *Node) Walk() <-chan *Node {
+	ch := make(chan *Node)
+	go func() {
+		node.walk(ch)
+		close(ch)
+	}()
+	return ch
+}
+
+func (node *Node) walk(ch chan *Node) {
+	if node == nil {
 		return
 	}
 
-	root.left.Keys(ch)
-	ch <- root.Key
-	root.left.Keys(ch)
+	node.left.walk(ch)
+	ch <- node
+	node.right.walk(ch)
+}
+
+// Traverses the treap in order from a new goroutine, returning
+// a read-only channel of keys.
+func (node *Node) WalkKeys() <-chan int {
+	ch := make(chan int)
+	go func() {
+		node.walkKeys(ch)
+		close(ch)
+	}()
+
+	return ch
+}
+
+func (node *Node) walkKeys(ch chan int) {
+	if node == nil {
+		return
+	}
+
+	node.left.walkKeys(ch)
+	ch <- node.Key
+	node.right.walkKeys(ch)
 }
 
 func (node *Node) leftRotate() *Node {
