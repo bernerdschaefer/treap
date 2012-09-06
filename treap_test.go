@@ -1,5 +1,6 @@
 package treap
 
+import "math/rand"
 import "testing"
 
 func Test_Sanity(t *testing.T) {
@@ -27,6 +28,36 @@ func Test_Sanity(t *testing.T) {
 	treap = treap.Delete(5)
 	if treap.Contains(5) {
 		t.Error("fail")
+	}
+}
+
+func Test_TreapIsBalanced(t *testing.T) {
+	treap := New()
+	for i := 0; i < 1000; i++ {
+		treap = treap.Set(i, i)
+	}
+	if treap.Depth() >= 40 {
+		t.Error("treap is unbalanced")
+	}
+}
+
+func Test_TreapIsBalancedReverse(t *testing.T) {
+	treap := New()
+	for i := 999; i >= 0; i-- {
+		treap = treap.Set(i, i)
+	}
+	if treap.Depth() >= 40 {
+		t.Error("treap is unbalanced")
+	}
+}
+
+func Test_TreapIsBalancedRandom(t *testing.T) {
+	treap := New()
+	for i := 0; i < 1000; i++ {
+		treap = treap.Set(rand.Int(), nil)
+	}
+	if treap.Depth() >= 40 {
+		t.Error("treap is unbalanced")
 	}
 }
 

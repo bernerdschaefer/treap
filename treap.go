@@ -160,6 +160,23 @@ func (root *Node) Delete(key int) (node *Node) {
 	return
 }
 
+func (node *Node) Depth() int {
+	if node == nil {
+		return 0
+	}
+
+	leftDepth := node.left.Depth()
+	rightDepth := node.right.Depth()
+
+	if leftDepth > rightDepth {
+		return leftDepth + 1
+	} else {
+		return rightDepth + 1
+	}
+
+	panic("unreachable")
+}
+
 // Traverses the treap in order from a new goroutine, returning
 // a read-only channel of nodes.
 func (node *Node) Walk() <-chan *Node {

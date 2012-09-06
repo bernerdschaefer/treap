@@ -1,5 +1,6 @@
 package treap
 
+import "math/rand"
 import "testing"
 
 func Test_MutableNodeGet(t *testing.T) {
@@ -36,6 +37,36 @@ func Test_MutableNodeSet(t *testing.T) {
 	}
 	if value != "c" {
 		t.Errorf("expected treap[0] to equal 'c' but was '%s'", value)
+	}
+}
+
+func Test_MutableTreapIsBalanced(t *testing.T) {
+	treap := NewMutable()
+	for i := 0; i < 1000; i++ {
+		treap.Set(i, i)
+	}
+	if treap.Treap().Depth() >= 40 {
+		t.Error("treap is unbalanced")
+	}
+}
+
+func Test_MutableTreapIsBalancedReverse(t *testing.T) {
+	treap := NewMutable()
+	for i := 999; i >= 0; i-- {
+		treap.Set(i, i)
+	}
+	if treap.Treap().Depth() >= 40 {
+		t.Error("treap is unbalanced")
+	}
+}
+
+func Test_MutableTreapIsBalancedRandom(t *testing.T) {
+	treap := NewMutable()
+	for i := 0; i < 1000; i++ {
+		treap.Set(rand.Int(), nil)
+	}
+	if treap.Treap().Depth() >= 40 {
+		t.Error("treap is unbalanced")
 	}
 }
 
