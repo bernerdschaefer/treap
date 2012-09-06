@@ -29,3 +29,10 @@ func Test_Sanity(t *testing.T) {
 		t.Error("fail")
 	}
 }
+
+func Benchmark_PersistentTreapSet(b *testing.B) {
+	treap := New()
+	for i := 0; i < b.N; i++ {
+		treap = treap.Set(i, string(i))
+	}
+}
