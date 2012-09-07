@@ -6,7 +6,7 @@ associating integer keys with arbitrary values.
 The implementation is based on [Treaps: The Magical Awesome
 BBT](http://pavpanchekha.com/blog/treap.html).
 
-    import "github.com/bernerdschaefer/treap.go"
+    import "github.com/bernerdschaefer/treap"
 
     store := treap.New()
     store = treap.Set(1, "one")
