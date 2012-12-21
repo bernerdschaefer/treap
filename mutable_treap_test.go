@@ -25,7 +25,7 @@ func Test_MutableNodeSet(t *testing.T) {
 
 	value, ok := treap.Get(1)
 	if !ok {
-		t.Error("expected treap to contain key 2 but didn't")
+		t.Error("expected treap to contain key 1 but didn't")
 	}
 	if value != "b" {
 		t.Errorf("expected treap[1] to equal 'b' but was '%s'", value)

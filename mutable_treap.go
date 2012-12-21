@@ -32,12 +32,12 @@ func (root *Node) setUnsafe(key int, value interface{}, priority int) *Node {
 	case key < root.Key:
 		root.left = root.left.setUnsafe(key, value, priority)
 		if root.left.priority < root.priority {
-			root.leftRotateUnsafe()
+			root = root.leftRotateUnsafe()
 		}
 	case key > root.Key:
 		root.right = root.right.setUnsafe(key, value, priority)
 		if root.right.priority < root.priority {
-			root.rightRotateUnsafe()
+			root = root.rightRotateUnsafe()
 		}
 	case key == root.Key:
 		root.Value = value
@@ -46,24 +46,12 @@ func (root *Node) setUnsafe(key int, value interface{}, priority int) *Node {
 	return root
 }
 
-func (node *Node) leftRotateUnsafe() *Node {
-	right := &Node{node.priority, node.Key, node.Value, node.left.right, node.right}
-
-	node.priority = node.left.priority
-	node.Key = node.left.Key
-	node.Value = node.left.Value
-	node.left = node.left.left
-	node.right = right
-	return node
+func (node *Node) leftRotateUnsafe() (result *Node) {
+	result, node.left, node.left.right = node.left, node.left.right, node
+	return
 }
 
-func (node *Node) rightRotateUnsafe() *Node {
-	left := &Node{node.priority, node.Key, node.Value, node.right.left, node.left}
-
-	node.priority = node.right.priority
-	node.Key = node.right.Key
-	node.Value = node.right.Value
-	node.right = node.right.right
-	node.left = left
-	return node
+func (node *Node) rightRotateUnsafe() (result *Node) {
+	result, node.right, node.right.left = node.right, node.right.left, node
+	return result
 }
